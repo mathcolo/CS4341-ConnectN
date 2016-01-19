@@ -15,8 +15,8 @@ public class Board {
 	int numOfDiscsInColumn[];
 	int emptyCell=9;
 	int N;
-	int PLAYER1=1;
-	int PLAYER2=2;
+	public static int PLAYER1=1;
+	public static int PLAYER2=2;
 	int NOCONNECTION=-1;
 	int TIE=0;
 	

@@ -3,10 +3,20 @@ import referee.Board;
 public class HeuristicEval {
 
 	public int HeuristicEvalFn(Board state) {
-		//for (int i = state.getN(); i < Math.floorDiv(state.getN(), 2)) {
-
-		//}
-		return 0;
+		int result = 0;
+		for (int i = state.getN(); i < Math.floorDiv(state.getN(), 2); i--) {
+			result += Math.pow(i, 2)*nInARow(1, state, i);
+			result -= Math.pow(i, 2)*nInARow(1, state, i);
+		}
+		int winner = state.isConnectN();
+		
+		if (winner == Board.PLAYER1) {
+			result += Math.pow(state.getN()+1, 2);
+		}
+		else if (winner == Board.PLAYER2) {
+			result -= Math.pow(state.getN()+1, 2);
+		}
+		return result;
 	}
 
 	public int nInARow(int player, Board state, int n) {
