@@ -26,12 +26,15 @@ public class MinimaxBoard {
 		
 		//Iterate through each column of the board
 		for(int i = 0; i < board.getWidth(); i++) {
-			if(board.canDropADiscFromTop(i, 0)) {
+			if(board.canDropADiscFromTop(i, parentMove.player)) {
 				//Move can be done to this column
-				
+
 				Move move = new Move(i, Move.oppositePlayer(parentMove.player), Move.Type.DROP);
 				MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 				newBoard.board.dropADiscFromTop(i, move.player);
+				this.children.add(newBoard);
+				totalSub++;
+				
 				totalSub += newBoard.generateChildren(depth-1);
 				
 				
@@ -44,6 +47,15 @@ public class MinimaxBoard {
 	
 	
 	public static void main(String[] args) {
+		
+		Board test = new Board(7, 7, 4);
+		test.dropADiscFromTop(2, 1);
+		
+		
+		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(2,1,Move.Type.DROP));
+		wrapper.generateChildren(5);
+		wrapper.children.get(2).board.printBoard();
+		
 		
 	}
 	
