@@ -13,10 +13,10 @@ public class Board {
 	int height;
 	int board[][];
 	int numOfDiscsInColumn[];
-	int emptyCell=9;
-	int N;
+	public static int emptyCell=9;
 	public static int PLAYER1=1;
 	public static int PLAYER2=2;
+	int N;
 	int NOCONNECTION=-1;
 	int TIE=0;
 	
