@@ -20,7 +20,7 @@ public class Board {
 	int NOCONNECTION=-1;
 	int TIE=0;
 	
-	 Board(int height, int width, int N){
+	 public Board(int height, int width, int N){
 		this.width=width;
 		this.height=height;
 		board =new int[height][width];
@@ -408,4 +408,16 @@ public class Board {
 //       b.test3();
  //        b.test5();
 	 }
+
+	public int getWidth() {
+		return this.width;
+	}
+	
+	public int getHeight() {
+		return this.height;
+	}
+
+	public int[][] getBoard() {
+		return this.board;
+	}
 }
