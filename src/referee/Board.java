@@ -313,6 +313,10 @@ public class Board {
 		 this.board[row][col]=player;
 	 }
 	 
+	 public int getN() {
+		 return this.N;
+	 }
+	 
 	 /**
 	  * test is connect N diagonally y=-x+k
 	  * */ 
