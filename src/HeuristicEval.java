@@ -18,37 +18,70 @@ public class HeuristicEval {
 
 		String match = "";
 		for (int m = 0; m <n; m++) {
-			match+=(char)player;
+			match+=player;
 		}
 
 		for (int i = 0; i< state.getWidth(); i++) {
 			String col = "";
 			for (int j = 0; j < state.getHeight(); j++) {
-				col += (char) state.getBoard()[i][j];
+				col += state.getBoard()[j][i];
 			}
-
 			if (col.charAt(0) == '9') {
-				while (col.charAt(0)=='9') {
-					col = col.substring(1);
-				}
-
-				if (col.substring(0, n).equals(match) && col.charAt(n) != (char) player) {
-					numV++;
+				int p = col.indexOf(""+player);
+				if (p != -1) {
+					col = col.substring(p);
+					if (col.length() >= n && col.substring(0, n).equals(match)) {
+						if (col.length()== n || col.charAt(n) != player)
+							numV++;
+					}
 				}
 			}
 		}
 		return numV;
 	}
 
-	private int nHorizontals(int player, Board state, int n) {
-		// TODO Auto-generated method stub
-		return 0;
+	static int nHorizontals(int player, Board state, int n) {
+		int numH = 0;
+		int otherplayer = (player == 1) ? 2 : 1;
+		String match = "";
+		for (int m = 0; m <n; m++) {
+			match+=player;
+		}
+		
+		for (int i = 0; i< state.getHeight(); i++) {
+			String row = "";
+			for (int j = 0; j < state.getWidth(); j++) {
+				row += state.getBoard()[i][j];
+			}
+			System.out.println(row);
+			
+			while (row.indexOf(player) != -1) {
+				int p = row.indexOf(""+player);
+				if (p == 0 && row.length() > n && row.substring(0, n) == match && row.charAt(p+1) == 9) {
+					numH++;
+					row = row.substring(n);
+				}
+				else if (row.length() - p == n && row.substring(p, n+p) == match 
+						&& row.charAt(p-1) == 9) {
+					numH++;
+					row = "";
+				}
+				else if (row.length() - p > n && row.substring(p, n+p) == match 
+						&& (row.charAt(p-1) == 9 || row.charAt(p+1) == 9)) {
+					numH++;
+					row = row.substring(n);
+				}
+			}
+			
+		}
+		return numH;
 	}
 
 	private int nDiagonals(int player, Board state, int n) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 
 
