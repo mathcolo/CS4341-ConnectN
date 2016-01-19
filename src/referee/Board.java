@@ -55,7 +55,6 @@ public class Board {
 		 b.PLAYER2 = this.PLAYER2;
 		 b.NOCONNECTION = this.NOCONNECTION;
 		 b.TIE = this.TIE;
-		 
 	 }
 	 
 	 public void printBoard(){

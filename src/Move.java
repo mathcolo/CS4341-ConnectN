@@ -15,5 +15,10 @@ public class Move {
 		this.player = player;
 		this.moveType = moveType;
 	}
+	
+	public static int oppositePlayer(int player) {
+		if(player == 1) return 2;
+		else return 1;
+	}
 
 }
