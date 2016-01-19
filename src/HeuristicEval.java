@@ -52,7 +52,6 @@ public class HeuristicEval {
 
 	static int nHorizontals(int player, Board state, int n) {
 		int numH = 0;
-		int otherplayer = (player == 1) ? 2 : 1;
 		String match = "";
 		for (int m = 0; m <n; m++) {
 			match+=player;
@@ -67,17 +66,17 @@ public class HeuristicEval {
 			
 			while (row.indexOf(player) != -1) {
 				int p = row.indexOf(""+player);
-				if (p == 0 && row.length() > n && row.substring(0, n) == match && row.charAt(p+1) == 9) {
+				if (p == 0 && row.length() > n && row.substring(0, n) == match && row.charAt(p+1) == Board.emptyCell) {
 					numH++;
 					row = row.substring(n);
 				}
 				else if (row.length() - p == n && row.substring(p, n+p) == match 
-						&& row.charAt(p-1) == 9) {
+						&& row.charAt(p-1) == Board.emptyCell) {
 					numH++;
 					row = "";
 				}
 				else if (row.length() - p > n && row.substring(p, n+p) == match 
-						&& (row.charAt(p-1) == 9 || row.charAt(p+1) == 9)) {
+						&& (row.charAt(p-1) == Board.emptyCell || row.charAt(p+1) == Board.emptyCell)) {
 					numH++;
 					row = row.substring(n);
 				}
