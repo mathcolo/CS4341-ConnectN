@@ -20,7 +20,7 @@ public class Board {
 	int NOCONNECTION=-1;
 	int TIE=0;
 	
-	 Board(int height, int width, int N){
+	 public Board(int height, int width, int N){
 		this.width=width;
 		this.height=height;
 		board =new int[height][width];
@@ -32,6 +32,30 @@ public class Board {
 //		for(int j=0;j<width;j++)
 //			numOfDiscsInColumn[j]=0;
 		this.N=N;
+	 }
+	 
+	 
+	 //Copy constructor
+	 public Board(Board b) {
+		 b.width = this.width;
+		 b.height = this.height;
+		 
+		 b.board = new int[height][width];
+		 
+		 //Copy board state
+		 for(int i = 0; i < b.getWidth(); i++) {
+			 for(int j = 0; j < b.getHeight(); i++) {
+				 b.board[i][j] = this.board[i][j];
+			 }
+		 }
+		 
+		 b.emptyCell = this.emptyCell;
+		 b.N = this.N;
+		 b.PLAYER1 = this.PLAYER1;
+		 b.PLAYER2 = this.PLAYER2;
+		 b.NOCONNECTION = this.NOCONNECTION;
+		 b.TIE = this.TIE;
+		 
 	 }
 	 
 	 public void printBoard(){
@@ -313,6 +337,10 @@ public class Board {
 		 this.board[row][col]=player;
 	 }
 	 
+	 public int getN() {
+		 return this.N;
+	 }
+	 
 	 /**
 	  * test is connect N diagonally y=-x+k
 	  * */ 
@@ -404,4 +432,16 @@ public class Board {
 //       b.test3();
  //        b.test5();
 	 }
+
+	public int getWidth() {
+		return this.width;
+	}
+	
+	public int getHeight() {
+		return this.height;
+	}
+
+	public int[][] getBoard() {
+		return this.board;
+	}
 }
