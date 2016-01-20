@@ -60,19 +60,14 @@ public class HeuristicEvalTest extends TestCase{
 		Board b  = new Board(5, 5, 3);
 		
 		b.setBoard(4, 0, 1);
-		b.setBoard(4, 1, 1);
+		b.setBoard(3, 0, 1);
+		b.setBoard(2, 0, 1);
 		
-		b.setBoard(4, 4, 1);
-		b.setBoard(3, 4, 1);
+		b.setBoard(4, 4, 2);
+		b.setBoard(3, 4, 2);
 		b.printBoard();
 		
-		assertEquals(6, HeuristicEval.HeuristicEvalFn(b));
-		
-		b.setBoard(4, 3, 2);
-		b.setBoard(3, 3, 2);
-		b.printBoard();
-		
-		assertEquals(2, HeuristicEval.HeuristicEvalFn(b));
+		assertEquals(12, HeuristicEval.HeuristicEvalFn(b));
 	}
 	
 }

@@ -11,7 +11,7 @@ public class HeuristicEval {
 			result -= (int)Math.pow(i, 2)*nInARow(Board.PLAYER2, state, i);
 		}
 		int winner = state.isConnectN();
-		
+
 		if (winner == Board.PLAYER1) {
 			result += (int)Math.pow(state.getN()+1, 2);
 		}
@@ -59,21 +59,21 @@ public class HeuristicEval {
 		for (int m = 0; m <n; m++) {
 			match+=player;
 		}
-		
+
 		for (int i = 0; i < state.getHeight(); i++) {
 			String row = "";
 			for (int j = 0; j < state.getWidth(); j++) {
 				row += state.getBoard()[i][j];
 			}
-			
-			while (row.indexOf(player) != -1) {
+
+			while (row.indexOf(""+player) != -1) {
 				int p = row.indexOf(""+player);
-				if (p == 0 && row.length() > n && row.substring(0, n) == match && row.charAt(p+1) == Board.emptyCell) {
+				if (p == 0 && row.length() > n && row.substring(0, n) == match && row.charAt(p+1) == (char) Board.emptyCell + '0') {
 					numH++;
 					row = row.substring(n);
 				}
 				else if (row.length() - p == n && row.substring(p, n+p) == match 
-						&& row.charAt(p-1) == Board.emptyCell) {
+						&& row.charAt(p-1) == (char) Board.emptyCell + '0') {
 					numH++;
 					row = "";
 				}  
@@ -82,8 +82,11 @@ public class HeuristicEval {
 					numH++;
 					row = row.substring(n);
 				}
+				else {
+					row = "";
+				}
 			}
-			
+
 		}
 		return numH;
 	}
@@ -91,7 +94,7 @@ public class HeuristicEval {
 	public static int nDiagonals(int player, Board state, int n) {
 		ArrayList<String> diagStrs = new ArrayList<String>();
 		int numD=0;
-		
+
 		String match = "";
 		for (int m = 0; m <n; m++) {
 			match+=player;
@@ -100,69 +103,64 @@ public class HeuristicEval {
 		// top left
 		for(int i = 0; i < state.getWidth(); i++){
 			String diag = "";
-            for(int j = 0, k = i; j < state.getHeight() && k >= 0; j++,k--){
-            	diag += state.getBoard()[j][k];
-           // 	System.out.print("(" + j + "," + k +")");
-            }
-            diagStrs.add(diag);
-         //   System.out.println(diag);
-        }
-		
+			for(int j = 0, k = i; j < state.getHeight() && k >= 0; j++,k--){
+				diag += state.getBoard()[j][k];
+			}
+			diagStrs.add(diag);
+		}
+
 		// bottom right
 		for(int i = 1; i < state.getHeight(); i++){
 			String diag = "";
-            for(int j = i, k = state.getWidth() -1; j < state.getHeight() && k >= 0; j++,k--){
-            	diag += state.getBoard()[j][k];
-            //	System.out.print("(" + j + "," + k +")");
-            }
-            diagStrs.add(diag);
-         //   System.out.println(diag);
-        }
-		
+			for(int j = i, k = state.getWidth() -1; j < state.getHeight() && k >= 0; j++,k--){
+				diag += state.getBoard()[j][k];
+			}
+			diagStrs.add(diag);
+		}
+
 		// bottom left
 		for(int i = state.getWidth()-1; i >=0; i--){
 			String diag = "";
-            for(int j = i, k = 0; k < state.getHeight() && j < state.getWidth(); k++,j++){
-            	diag += state.getBoard()[j][k];
-            //	System.out.print("(" + j + "," + k +")");
-            }
-            diagStrs.add(diag);
-           // System.out.println(diag);
-        }
-		
+			for(int j = i, k = 0; k < state.getHeight() && j < state.getWidth(); k++,j++){
+				diag += state.getBoard()[j][k];
+			}
+			diagStrs.add(diag);
+		}
+
 		// top right
-				for(int i = state.getWidth()-1; i >=0; i--){
-					String diag = "";
-		            for(int j = 0, k = i; k < state.getHeight() && j < state.getWidth(); k++,j++){
-		            	diag += state.getBoard()[j][k];
-		            	//System.out.print("(" + j + "," + k +")");
-		            }
-		            diagStrs.add(diag);
-		          //  System.out.println(diag);
-		        }
-				
+		for(int i = state.getWidth()-1; i >=0; i--){
+			String diag = "";
+			for(int j = 0, k = i; k < state.getHeight() && j < state.getWidth(); k++,j++){
+				diag += state.getBoard()[j][k];
+			}
+			diagStrs.add(diag);
+		}
+
 		for (String d : diagStrs) {
-			System.out.println(d);
-			while (d.indexOf(player) != -1) {
+			while (d.indexOf(""+player) != -1) {
 				int p = d.indexOf(""+player);
-				if (p == 0 && d.length() > n && d.substring(0, n) == match && d.charAt(p+1) == Board.emptyCell) {
+				if (p == 0 && d.length() > n && d.substring(0, n) == match && d.charAt(p+1) == (char) Board.emptyCell + '0') {
 					numD++;
 					d = d.substring(n);
 				}
-				else if (d.length() - p == n && d.substring(p, n+p) == match 
-						&& d.charAt(p-1) == Board.emptyCell) {
+				else if (p!= 0 && d.length() - p == n && d.substring(p, n+p).equals(match) 
+						&& d.charAt(p-1) == (char) Board.emptyCell + '0') {
 					numD++;
 					d = "";
 				}  
-				else if (d.length() - p > n && d.substring(p, n+p) == match 
-						&& (d.charAt(p-1) == (char)(Board.emptyCell + '0') || d.charAt(p+1) == (char)(Board.emptyCell + '0'))) {
+				else if (p != 0 && d.length() - p > n && d.substring(p, n+p).equals(match)
+						&& (d.charAt(p-1) == (char)(Board.emptyCell + '0') 
+						|| d.charAt(p+1) == (char)(Board.emptyCell + '0'))) {
 					numD++;
 					d = d.substring(n);
 				}
+				else {
+					d="";
+				}
 			}
-			
+
 		}
-		
+
 		return numD;
 	}
 
