@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import referee.Board;
 
 public class HeuristicEval {
@@ -58,7 +60,7 @@ public class HeuristicEval {
 			match+=player;
 		}
 		
-		for (int i = 0; i< state.getHeight(); i++) {
+		for (int i = 0; i < state.getHeight(); i++) {
 			String row = "";
 			for (int j = 0; j < state.getWidth(); j++) {
 				row += state.getBoard()[i][j];
@@ -86,9 +88,82 @@ public class HeuristicEval {
 		return numH;
 	}
 
-	private static int nDiagonals(int player, Board state, int n) {
-		// TODO Auto-generated method stub
-		return 0;
+	public static int nDiagonals(int player, Board state, int n) {
+		ArrayList<String> diagStrs = new ArrayList<String>();
+		int numD=0;
+		
+		String match = "";
+		for (int m = 0; m <n; m++) {
+			match+=player;
+		}
+
+		// top left
+		for(int i = 0; i < state.getWidth(); i++){
+			String diag = "";
+            for(int j = 0, k = i; j < state.getHeight() && k >= 0; j++,k--){
+            	diag += state.getBoard()[j][k];
+           // 	System.out.print("(" + j + "," + k +")");
+            }
+            diagStrs.add(diag);
+         //   System.out.println(diag);
+        }
+		
+		// bottom right
+		for(int i = 1; i < state.getHeight(); i++){
+			String diag = "";
+            for(int j = i, k = state.getWidth() -1; j < state.getHeight() && k >= 0; j++,k--){
+            	diag += state.getBoard()[j][k];
+            //	System.out.print("(" + j + "," + k +")");
+            }
+            diagStrs.add(diag);
+         //   System.out.println(diag);
+        }
+		
+		// bottom left
+		for(int i = state.getWidth()-1; i >=0; i--){
+			String diag = "";
+            for(int j = i, k = 0; k < state.getHeight() && j < state.getWidth(); k++,j++){
+            	diag += state.getBoard()[j][k];
+            //	System.out.print("(" + j + "," + k +")");
+            }
+            diagStrs.add(diag);
+           // System.out.println(diag);
+        }
+		
+		// top right
+				for(int i = state.getWidth()-1; i >=0; i--){
+					String diag = "";
+		            for(int j = 0, k = i; k < state.getHeight() && j < state.getWidth(); k++,j++){
+		            	diag += state.getBoard()[j][k];
+		            	//System.out.print("(" + j + "," + k +")");
+		            }
+		            diagStrs.add(diag);
+		          //  System.out.println(diag);
+		        }
+				
+		for (String d : diagStrs) {
+			System.out.println(d);
+			while (d.indexOf(player) != -1) {
+				int p = d.indexOf(""+player);
+				if (p == 0 && d.length() > n && d.substring(0, n) == match && d.charAt(p+1) == Board.emptyCell) {
+					numD++;
+					d = d.substring(n);
+				}
+				else if (d.length() - p == n && d.substring(p, n+p) == match 
+						&& d.charAt(p-1) == Board.emptyCell) {
+					numD++;
+					d = "";
+				}  
+				else if (d.length() - p > n && d.substring(p, n+p) == match 
+						&& (d.charAt(p-1) == (char)(Board.emptyCell + '0') || d.charAt(p+1) == (char)(Board.emptyCell + '0'))) {
+					numD++;
+					d = d.substring(n);
+				}
+			}
+			
+		}
+		
+		return numD;
 	}
 
 

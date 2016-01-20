@@ -44,6 +44,18 @@ public class HeuristicEvalTest extends TestCase{
 		assertEquals(0, HeuristicEval.nHorizontals(2, b, 3));
 	}
 	
+	public void testNDiagonal() {
+		Board b = new Board(4, 4, 3);
+		b.setBoard(3, 0, 1);
+		b.setBoard(2, 0, 1);
+		b.setBoard(3, 1, 2);
+		b.setBoard(2, 1, 1);
+		
+		b.printBoard();
+		
+		assertEquals(1, HeuristicEval.nDiagonals(1, b, 2));
+	}
+	
 	public void testHeuristicFn() {
 		Board b  = new Board(5, 5, 3);
 		
