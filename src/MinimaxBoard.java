@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 import referee.Board;
 
@@ -21,7 +22,7 @@ public class MinimaxBoard {
 		
 		if(depth == 0) {
 			//Insert real heuristic evaluation function here
-			return 6;
+			return heuristicEstimator(this.board);
 		}
 		
 		//Max
@@ -90,6 +91,12 @@ public class MinimaxBoard {
 		System.out.println("Minimax value: " + value);
 		
 		
+	}
+	
+	//Evaluation function tester before Theresa's code goes in
+	public int heuristicEstimator(Board b) {
+		Random r = new Random();
+		return r.nextInt(100) - 50;
 	}
 	
 
