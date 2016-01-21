@@ -20,5 +20,9 @@ public class Move {
 		if(player == 1) return 2;
 		else return 1;
 	}
+	
+	public String toString() {
+		return "Move(column, player): (" + column + ", " + player + ")";
+	}
 
 }

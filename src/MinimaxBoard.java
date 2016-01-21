@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 import referee.Board;
 
@@ -15,14 +14,16 @@ public class MinimaxBoard {
 		this.parentMove = parentMove;
 	}
 	
-	public int minimax(int depth, int player) {
+	public int minimax(int depth, int player, ArrayList<Move> moves) {
 		
 		if(board == null)
 			System.err.println("Cannot generate children, board was null!");
 		
 		if(depth == 0) {
 			//Insert real heuristic evaluation function here
-			return heuristicEstimator(this.board);
+			int heuristicValue = HeuristicEval.HeuristicEvalFn(this.board);
+			System.out.println(heuristicValue);
+			return heuristicValue;
 		}
 		
 		//Max
@@ -40,9 +41,10 @@ public class MinimaxBoard {
 					newBoard.board.dropADiscFromTop(i, move.player);
 					this.children.add(newBoard);
 
-					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player));
-					if(value > maximumValue)
+					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), moves);
+					if(value > maximumValue) {
 						maximumValue = value;
+					}
 				}
 				
 			}
@@ -65,9 +67,11 @@ public class MinimaxBoard {
 					newBoard.board.dropADiscFromTop(i, move.player);
 					this.children.add(newBoard);
 
-					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player));
-					if(value < minimumValue)
+					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), moves);
+					if(value < minimumValue) {
 						minimumValue = value;
+					}
+						
 				}
 				
 			}
@@ -83,21 +87,29 @@ public class MinimaxBoard {
 	public static void main(String[] args) {
 		
 		Board test = new Board(7, 7, 4);
-		test.dropADiscFromTop(2, 1);
+							//col, player
+		test.dropADiscFromTop(2, 2);
+		test.printBoard();
 		
 		//1 = max
 		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(2,2,Move.Type.DROP));
-		int value = wrapper.minimax(5, 2);
+		ArrayList<Move> moves = new ArrayList<Move>();
+		
+		int value = wrapper.minimax(4, 2, moves);
+		
 		System.out.println("Minimax value: " + value);
-		
-		
-	}
-	
-	//Evaluation function tester before Theresa's code goes in
-	public int heuristicEstimator(Board b) {
-		Random r = new Random();
-		return r.nextInt(100) - 50;
-	}
-	
 
+		test.printBoard();
+		
+		
+	}
+	
+	private class MinimaxReturn {
+		
+		int value;
+		MinimaxBoard board;
+		
+	}
+	
+	
 }
