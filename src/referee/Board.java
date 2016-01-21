@@ -3,6 +3,8 @@
  */
 package referee;
 
+import java.util.Arrays;
+
 /**
  * @author lzhu
  *
@@ -32,6 +34,34 @@ public class Board {
 //		for(int j=0;j<width;j++)
 //			numOfDiscsInColumn[j]=0;
 		this.N=N;
+	 }
+	 
+	 
+	 //Copy constructor
+	 public Board(Board b) {
+		 this.width = b.width;
+		 this.height = b.height;
+		 
+		 this.board = new int[height][width];
+		 
+		 //Copy board state
+		 for(int i = 0; i < b.getHeight(); i++) {
+			 for(int j = 0; j < b.getWidth(); j++) {
+				 this.board[i][j] = b.board[i][j];
+			 }
+		 }
+		 
+		 this.numOfDiscsInColumn = new int[b.width];
+		 for(int i = 0; i < b.numOfDiscsInColumn.length; i++) {
+			 this.numOfDiscsInColumn[i] = b.numOfDiscsInColumn[i];
+		 }
+		 
+		 this.emptyCell = b.emptyCell;
+		 this.N = b.N;
+		 this.PLAYER1 = b.PLAYER1;
+		 this.PLAYER2 = b.PLAYER2;
+		 this.NOCONNECTION = b.NOCONNECTION;
+		 this.TIE = b.TIE;
 	 }
 	 
 	 public void printBoard(){
