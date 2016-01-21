@@ -14,7 +14,7 @@ public class MinimaxBoard {
 		this.parentMove = parentMove;
 	}
 	
-	public int minimax(int depth, int player, ArrayList<Move> moves) {
+	public MinimaxReturn minimax(int depth, int player) {
 		
 		if(board == null)
 			System.err.println("Cannot generate children, board was null!");
@@ -22,14 +22,14 @@ public class MinimaxBoard {
 		if(depth == 0) {
 			//Insert real heuristic evaluation function here
 			int heuristicValue = HeuristicEval.HeuristicEvalFn(this.board);
-			System.out.println(heuristicValue);
-			return heuristicValue;
+			return new MinimaxReturn(heuristicValue, null);
 		}
 		
 		//Max
 		if(player == 1) {
 			
 			int maximumValue = Integer.MIN_VALUE;
+			MinimaxBoard maximumBoard = null;
 			
 			//Iterate through each column of the board
 			for(int i = 0; i < board.getWidth(); i++) {
@@ -41,21 +41,23 @@ public class MinimaxBoard {
 					newBoard.board.dropADiscFromTop(i, move.player);
 					this.children.add(newBoard);
 
-					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), moves);
+					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player)).value;
 					if(value > maximumValue) {
 						maximumValue = value;
+						maximumBoard = newBoard;
 					}
 				}
 				
 			}
 			
-			return maximumValue;
+			return new MinimaxReturn(maximumValue, maximumBoard);
 			
 		}
 		//Min
 		else if(player == 2) {
 			
 			int minimumValue = Integer.MAX_VALUE;
+			MinimaxBoard minimumBoard = null;
 			
 			//Iterate through each column of the board
 			for(int i = 0; i < board.getWidth(); i++) {
@@ -67,20 +69,21 @@ public class MinimaxBoard {
 					newBoard.board.dropADiscFromTop(i, move.player);
 					this.children.add(newBoard);
 
-					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), moves);
+					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player)).value;
 					if(value < minimumValue) {
 						minimumValue = value;
+						minimumBoard = newBoard;
 					}
 						
 				}
 				
 			}
 			
-			return minimumValue;
+			return new MinimaxReturn(minimumValue, minimumBoard);
 			
 		}
 
-		return -1;
+		return null;
 	}
 	
 	
@@ -89,15 +92,15 @@ public class MinimaxBoard {
 		Board test = new Board(7, 7, 4);
 							//col, player
 		test.dropADiscFromTop(2, 2);
+		test.dropADiscFromTop(3, 2);
+		test.dropADiscFromTop(5, 2);
+		
 		test.printBoard();
 		
 		//1 = max
-		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(2,2,Move.Type.DROP));
-		ArrayList<Move> moves = new ArrayList<Move>();
+		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(4,2,Move.Type.DROP));
 		
-		int value = wrapper.minimax(4, 2, moves);
-		
-		System.out.println("Minimax value: " + value);
+		test.dropADiscFromTop(wrapper.parentMove.column, 1);
 
 		test.printBoard();
 		
@@ -108,6 +111,11 @@ public class MinimaxBoard {
 		
 		int value;
 		MinimaxBoard board;
+		
+		public MinimaxReturn(int value, MinimaxBoard board) {
+			this.value = value;
+			this.board = board;
+		}
 		
 	}
 	
