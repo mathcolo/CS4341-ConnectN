@@ -70,4 +70,15 @@ public class HeuristicEvalTest extends TestCase{
 		assertEquals(12, HeuristicEval.HeuristicEvalFn(b));
 	}
 	
+	public void testBoards() {
+		Board test = new Board(7,7,4);
+		
+		test.dropADiscFromTop(4, 1);
+		test.dropADiscFromTop(5, 1);
+		test.dropADiscFromTop(6, 1);
+		test.dropADiscFromTop(3, 2);
+		
+		System.out.println(HeuristicEval.HeuristicEvalFn(test));
+	}
+ 	
 }

@@ -22,7 +22,15 @@ public class HeuristicEval {
 	}
 
 	public static int nInARow(int player, Board state, int n) {
-		return nDiagonals(player, state, n) + nHorizontals(player, state, n) + nVerticals(player, state, n);
+		int num = nDiagonals(player, state, n) ;
+		int num2 = nHorizontals(player, state, n);
+		int num3 = nVerticals(player, state, n);
+		
+		System.out.println(num + " diagonals of " + n +"-length for player" + player);
+		System.out.println(num2 + " horizontals of " + n +"-length for player" + player);
+		System.out.println(num3 + " verticals of " + n +"-length for player" + player);
+		
+		return num + num2 + num3;
 	}
 
 	static int nVerticals(int player, Board state, int n) {
@@ -65,22 +73,22 @@ public class HeuristicEval {
 			for (int j = 0; j < state.getWidth(); j++) {
 				row += state.getBoard()[i][j];
 			}
-
 			while (row.indexOf(""+player) != -1) {
 				int p = row.indexOf(""+player);
 				if (p == 0 && row.length() > n && row.substring(0, n) == match && row.charAt(p+1) == (char) Board.emptyCell + '0') {
 					numH++;
-					row = row.substring(n);
+					row = row.substring(n+p);
 				}
-				else if (row.length() - p == n && row.substring(p, n+p) == match 
+				else if (row.length() - p == n && row.substring(p, n+p).equals(match)
 						&& row.charAt(p-1) == (char) Board.emptyCell + '0') {
 					numH++;
 					row = "";
 				}  
-				else if (row.length() - p > n && row.substring(p, n+p) == match 
-						&& (row.charAt(p-1) == (char)(Board.emptyCell + '0') || row.charAt(p+1) == (char)(Board.emptyCell + '0'))) {
+				else if (row.length() - p > n && row.substring(p, n+p).equals(match) 
+						&& (row.charAt(p-1) == (char)(Board.emptyCell + '0') || row.charAt(p+1) == (char)(Board.emptyCell + '0')) && 
+						(row.charAt(p-1) != (char)(player + '0') && row.charAt(p+1) != (char)(player + '0'))) {
 					numH++;
-					row = row.substring(n);
+					row = row.substring(n+p);
 				}
 				else {
 					row = "";
@@ -141,7 +149,7 @@ public class HeuristicEval {
 				int p = d.indexOf(""+player);
 				if (p == 0 && d.length() > n && d.substring(0, n) == match && d.charAt(p+1) == (char) Board.emptyCell + '0') {
 					numD++;
-					d = d.substring(n);
+					d = d.substring(n+p);
 				}
 				else if (p!= 0 && d.length() - p == n && d.substring(p, n+p).equals(match) 
 						&& d.charAt(p-1) == (char) Board.emptyCell + '0') {
@@ -152,7 +160,7 @@ public class HeuristicEval {
 						&& (d.charAt(p-1) == (char)(Board.emptyCell + '0') 
 						|| d.charAt(p+1) == (char)(Board.emptyCell + '0'))) {
 					numD++;
-					d = d.substring(n);
+					d = d.substring(n+p);
 				}
 				else {
 					d="";
