@@ -1,4 +1,10 @@
+import referee.Board;
 
+/**
+ * 
+ * @author Theresa Inzerillo, Preston Mueller
+ *
+ */
 public class Move {
 	
 	public enum Type {
@@ -17,8 +23,8 @@ public class Move {
 	}
 	
 	public static int oppositePlayer(int player) {
-		if(player == 1) return 2;
-		else return 1;
+		if(player == Board.PLAYER1) return Board.PLAYER2;
+		else return Board.PLAYER1;
 	}
 	
 	public String toString() {

@@ -2,14 +2,29 @@ import java.util.ArrayList;
 
 import referee.Board;
 
+/**
+ * This class contains the heuristic evaluation function
+ * for boards as well as helper methods.
+ * 
+ * @author Theresa Inzerillo, Preston Mueller
+ */
 public class HeuristicEval {
 
+	/**
+	 * Heuristic evaluation function for Connect-N board states.
+	 * 
+	 * @param state - board state to evaluate
+	 * @return the result of the evaluation, 0 for a board in favor in
+	 * neither player, > 0 if in favor of player 1 (max) and < 0 if in favor 
+	 * of player 2 (min).
+	 */
 	public static int HeuristicEvalFn(Board state) {
 		int result = 0;
 		for (int i = state.getN()-1; i >= (int)Math.floorDiv(state.getN(), 2); i--) {
 			result += (int)Math.pow(i, 2)*nInARow(Board.PLAYER1, state, i);
 			result -= (int)Math.pow(i, 2)*nInARow(Board.PLAYER2, state, i);
 		}
+
 		int winner = state.isConnectN();
 
 		if (winner == Board.PLAYER1) {
@@ -21,18 +36,30 @@ public class HeuristicEval {
 		return result;
 	}
 
+	/**
+	 * Calculates the number of diagonals, horizontals and vertical 
+	 * sequences of a certain length, n, that a player has in the current
+	 * board.
+	 * 
+	 * @param player - player to check
+	 * @param state - board state to check
+	 * @param n - the length of sequences to check for
+	 * 
+	 * @return the number of sequences of n length in any direction for a player
+	 */
 	public static int nInARow(int player, Board state, int n) {
-		int num = nDiagonals(player, state, n) ;
-		int num2 = nHorizontals(player, state, n);
-		int num3 = nVerticals(player, state, n);
-		
-//		System.out.println(num + " diagonals of " + n +"-length for player" + player);
-//		System.out.println(num2 + " horizontals of " + n +"-length for player" + player);
-//		System.out.println(num3 + " verticals of " + n +"-length for player" + player);
-		
-		return num + num2 + num3;
+		return nDiagonals(player, state, n) + nHorizontals(player, state, n) + nVerticals(player, state, n);
 	}
 
+	/**
+	 * Calculates the number of vertical sequences a player has on the board
+	 * of n length. 
+	 * 
+	 * @param player - player to check for
+	 * @param state - the board state
+	 * @param n - the length of sequences to check for
+	 * @return the number of vertical sequences of n length
+	 */
 	static int nVerticals(int player, Board state, int n) {
 		int numV = 0;
 
@@ -61,6 +88,15 @@ public class HeuristicEval {
 		return numV;
 	}
 
+	/**
+	 * Calculates the number of horizontals sequences a player has on the board
+	 * of n length. 
+	 * 
+	 * @param player - player to check for
+	 * @param state - the board state
+	 * @param n - the length of sequences to check for
+	 * @return the number of horizontal sequences of n length
+	 */
 	static int nHorizontals(int player, Board state, int n) {
 		int numH = 0;
 		String match = "";
@@ -100,7 +136,16 @@ public class HeuristicEval {
 		return numH;
 	}
 
-	public static int nDiagonals(int player, Board state, int n) {
+	/**
+	 * Calculates the number of diagonal sequences a player has on the board
+	 * of n length.
+	 *  
+	 * @param player - player to check for
+	 * @param state - the board state
+	 * @param n - the length of sequences to check for
+	 * @return the number of diagonal sequences of n length
+	 */
+	static int nDiagonals(int player, Board state, int n) {
 		ArrayList<String> diagStrs = new ArrayList<String>();
 		int numD=0;
 
@@ -170,11 +215,6 @@ public class HeuristicEval {
 			}
 
 		}
-
 		return numD;
 	}
-
-
-
-
 }
