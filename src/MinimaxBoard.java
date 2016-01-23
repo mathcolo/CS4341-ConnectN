@@ -16,6 +16,8 @@ public class MinimaxBoard {
 	
 	public MinimaxReturn minimax(int depth, int player) {
 		
+		//Incoming moves are going to be emulated as always 2s and ours are 1s
+		
 		if(board == null)
 			System.err.println("Cannot generate children, board was null!");
 		

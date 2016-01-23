@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class TheresaPrestonPlayer {
 	
+	boolean poppedMe = false;
+	boolean poppedThem = false;
+	
 	public static void processInput(BufferedReader input) throws IOException{	
 		
     	String s = input.readLine();	
