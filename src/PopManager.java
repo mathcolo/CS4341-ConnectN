@@ -6,6 +6,8 @@ public class PopManager {
 	public boolean poppedMe = false;
 	public boolean poppedThem = false;
 	
+	public int totalBoards = 0;
+	
 	private PopManager() {
 		if(sharedInstance != null) {
 			throw new IllegalStateException("Derp");
