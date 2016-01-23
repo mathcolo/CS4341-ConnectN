@@ -75,7 +75,7 @@ public class HeuristicEval {
 			}
 			while (row.indexOf(""+player) != -1) {
 				int p = row.indexOf(""+player);
-				System.out.println(row.substring(0, n));
+				//System.out.println(row.substring(0, n));
 				if (p == 0 && row.length() > n && row.substring(0, n).equals(match) && row.charAt(n) == (char) Board.emptyCell + '0') {
 					numH++;
 					row = row.substring(n+p);

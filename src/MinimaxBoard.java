@@ -26,7 +26,7 @@ public class MinimaxBoard {
 		}
 		
 		//Max
-		if(player == 1) {
+		if(player == Board.PLAYER1) {
 			
 			int maximumValue = Integer.MIN_VALUE;
 			MinimaxBoard maximumBoard = null;
@@ -54,7 +54,7 @@ public class MinimaxBoard {
 			
 		}
 		//Min
-		else if(player == 2) {
+		else if(player == Board.PLAYER2) {
 			
 			int minimumValue = Integer.MAX_VALUE;
 			MinimaxBoard minimumBoard = null;
@@ -91,23 +91,30 @@ public class MinimaxBoard {
 		
 		Board test = new Board(7, 7, 4);
 							//col, player
+		test.dropADiscFromTop(4, 2);
 		test.dropADiscFromTop(4, 1);
+		test.dropADiscFromTop(4, 2);
+		test.dropADiscFromTop(4, 1);
+		test.dropADiscFromTop(4, 2);
+		test.dropADiscFromTop(3, 2);
+		test.dropADiscFromTop(3, 2);
+		test.dropADiscFromTop(3, 2);
+		test.dropADiscFromTop(3, 1);
+		test.dropADiscFromTop(3, 1);
+		
 		test.dropADiscFromTop(5, 1);
-		test.dropADiscFromTop(6, 1);
+		test.dropADiscFromTop(5, 2);
+		test.dropADiscFromTop(5, 1);
 		
-		System.out.println(HeuristicEval.HeuristicEvalFn(test));
+		test.dropADiscFromTop(6, 2);
 		
 		test.printBoard();
-		
-		//1 = max
-		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(4,2,Move.Type.DROP));
-		
-		test.dropADiscFromTop(wrapper.parentMove.column, 2);
-		
-		System.out.println(HeuristicEval.HeuristicEvalFn(test));
 
-		test.printBoard();
+		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(6,2,Move.Type.DROP));
+		MinimaxReturn stuff = wrapper.minimax(2, 1);
+		test.dropADiscFromTop(stuff.board.parentMove.column, stuff.board.parentMove.player);
 		
+		test.printBoard();
 		
 	}
 	
