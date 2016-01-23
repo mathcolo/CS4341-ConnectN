@@ -18,30 +18,40 @@ public class MinimaxBoard {
 		this.parentMove = parentMove;
 	}
 	
+	/**
+	 * This function runs a minimax search of a given depth using the board state 
+	 * for the current player and decides the best move for that player to make.
+	 * To reduce search time, it utilizes alpha-beta pruning.
+	 * 
+	 * NOTE: Incoming moves are going to be emulated as always 2s and outgoing as 1s.
+	 * 
+	 * @param depth - depth to run minimax search with
+	 * @param player - current player
+	 * @param alpha - current alpha value
+	 * @param beta - current beta value
+	 * 
+	 * @return the minimax value of the best move and the corresponding board as a MinimaxReturn object
+	 */
 	public MinimaxReturn minimax(int depth, int player, int alpha, int beta) {
-		
-		//Incoming moves are going to be emulated as always 2s and ours are 1s
-		
 		if(board == null)
-			System.err.println("Cannot generate children, board was null!");
+			System.err.println("Cannot generate children, board is null.");
 		
 		if(depth == 0) {
-			//Insert real heuristic evaluation function here
 			int heuristicValue = HeuristicEval.HeuristicEvalFn(this.board);
+			
 			return new MinimaxReturn(heuristicValue, null);
 		}
 		
-		//Max
+		// MAX SEARCH
 		if(player == Board.PLAYER1) {
 			
 			int maximumValue = Integer.MIN_VALUE;
 			MinimaxBoard maximumBoard = null;
 			
-			//DROP
+			// DROP MOVE FOR MAX
 			for(int i = 0; i < board.getWidth(); i++) {
+				// check whether move is legal
 				if(board.canDropADiscFromTop(i, parentMove.player)) {
-					//Move can be done to this column
-
 					Move move = new Move(i, player, Move.Type.DROP);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.dropADiscFromTop(i, move.player);
@@ -63,11 +73,10 @@ public class MinimaxBoard {
 				
 			}
 			
-			//POPOUT
+			// POPOUT MOVE FOR MAX
 			for(int i = 0; i < board.getWidth(); i++) {
+				// check whether move is legal
 				if(board.canRemoveADiscFromBottom(i, parentMove.player)) {
-					//Move can be done to this column
-
 					Move move = new Move(i, player, Move.Type.POPOUT);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.removeADiscFromBottom(i);
@@ -92,20 +101,19 @@ public class MinimaxBoard {
 			return new MinimaxReturn(maximumValue, maximumBoard);
 			
 		}
-		//Min
+		
+		// MIN SEARCH
 		else if(player == Board.PLAYER2) {
 			
 			int minimumValue = Integer.MAX_VALUE;
 			MinimaxBoard minimumBoard = null;
 			
-			//DROP
+			// DROP CASE FOR MIN
 			for(int i = 0; i < board.getWidth(); i++) {
+				// check if move is legal
 				if(board.canDropADiscFromTop(i, parentMove.player)) {
-					//Move can be done to this column
-
 					Move move = new Move(i, player, Move.Type.DROP);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
-					PopManager.getSharedInstance().totalBoards++;
 					newBoard.board.dropADiscFromTop(i, move.player);
 
 					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta).value;
@@ -126,14 +134,12 @@ public class MinimaxBoard {
 				
 			}
 			
-			//POPOUT
+			// POPOUT MOVE FOR MIN
 			for(int i = 0; i < board.getWidth(); i++) {
+				// check if move is legal
 				if(board.canRemoveADiscFromBottom(i, parentMove.player)) {
-					//Move can be done to this column
-
 					Move move = new Move(i, player, Move.Type.POPOUT);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
-					PopManager.getSharedInstance().totalBoards++;
 					newBoard.board.removeADiscFromBottom(i);
 
 					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta).value;
@@ -160,7 +166,7 @@ public class MinimaxBoard {
 		return null;
 	}
 	
-	
+	// TODO: REMOVE
 	public static void main(String[] args) {
 		
 		Board test = new Board(7, 7, 4);
@@ -209,11 +215,25 @@ public class MinimaxBoard {
 		
 	}
 	
+	/**
+	 * Class to encapsulate the board
+	 * and its minimax value.
+	 * 
+	 * @author Theresa Inzerillo, Preston Mueller
+	 *
+	 */
 	private class MinimaxReturn {
 		
 		int value;
 		MinimaxBoard board;
 		
+		/**
+		 * Creates an object to store a value and a board
+		 * as computed by {@link MinimaxBoard#minimax(int, int, int, int)}.
+		 * 
+		 * @param value - heuristic value of the board selected by minimax
+		 * @param board - board selected by minimax
+		 */
 		public MinimaxReturn(int value, MinimaxBoard board) {
 			this.value = value;
 			this.board = board;
