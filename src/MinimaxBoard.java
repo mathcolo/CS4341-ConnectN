@@ -2,9 +2,18 @@ import java.util.ArrayList;
 
 import referee.Board;
 
+/**
+ * This class runs a Minimax search on a board
+ * with a given depth. It utilizes alpha-beta 
+ * pruning to reduce search time.
+ * 
+ * @author Theresa Inzerillo, Preston Mueller
+ *
+ */
 public class MinimaxBoard {
 	
-	public Board board;
+	public Board board; // root board for Minimax search
+	
 	public ArrayList<MinimaxBoard> children = new ArrayList<MinimaxBoard>();
 	
 	Move parentMove;
