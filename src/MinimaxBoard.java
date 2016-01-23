@@ -91,16 +91,20 @@ public class MinimaxBoard {
 		
 		Board test = new Board(7, 7, 4);
 							//col, player
-		test.dropADiscFromTop(2, 2);
-		test.dropADiscFromTop(3, 2);
-		test.dropADiscFromTop(5, 2);
+		test.dropADiscFromTop(4, 1);
+		test.dropADiscFromTop(5, 1);
+		test.dropADiscFromTop(6, 1);
+		
+		System.out.println(HeuristicEval.HeuristicEvalFn(test));
 		
 		test.printBoard();
 		
 		//1 = max
 		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(4,2,Move.Type.DROP));
 		
-		test.dropADiscFromTop(wrapper.parentMove.column, 1);
+		test.dropADiscFromTop(wrapper.parentMove.column, 2);
+		
+		System.out.println(HeuristicEval.HeuristicEvalFn(test));
 
 		test.printBoard();
 		

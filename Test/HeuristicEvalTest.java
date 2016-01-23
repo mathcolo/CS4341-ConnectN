@@ -57,7 +57,7 @@ public class HeuristicEvalTest extends TestCase{
 	}
 	
 	public void testHeuristicFn() {
-		Board b  = new Board(5, 5, 3);
+		Board b  = new Board(5, 5, 4);
 		
 		b.setBoard(4, 0, 1);
 		b.setBoard(3, 0, 1);
@@ -67,7 +67,18 @@ public class HeuristicEvalTest extends TestCase{
 		b.setBoard(3, 4, 2);
 		b.printBoard();
 		
-		assertEquals(12, HeuristicEval.HeuristicEvalFn(b));
+		assertEquals(5, HeuristicEval.HeuristicEvalFn(b));
 	}
 	
+	public void testBoards() {
+		Board test = new Board(7,7,4);
+		
+		test.dropADiscFromTop(0, 1);
+		test.dropADiscFromTop(1, 1);
+		test.dropADiscFromTop(2, 1);
+		//test.dropADiscFromTop(3, 2);
+		
+		System.out.println(HeuristicEval.HeuristicEvalFn(test));
+	}
+ 	
 }
