@@ -1,11 +1,8 @@
-import java.util.ArrayList;
-
 import referee.Board;
 
 public class MinimaxBoard {
 	
 	public Board board;
-	public ArrayList<MinimaxBoard> children = new ArrayList<MinimaxBoard>();
 	
 	Move parentMove;
 
@@ -40,11 +37,7 @@ public class MinimaxBoard {
 
 					Move move = new Move(i, player, Move.Type.DROP);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
-					
-					PopManager.getSharedInstance().totalBoards++;
-					
 					newBoard.board.dropADiscFromTop(i, move.player);
-					this.children.add(newBoard);
 
 					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta).value;
 					if(value > maximumValue) {
@@ -70,9 +63,7 @@ public class MinimaxBoard {
 
 					Move move = new Move(i, player, Move.Type.POPOUT);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
-					PopManager.getSharedInstance().totalBoards++;
 					newBoard.board.removeADiscFromBottom(i);
-					this.children.add(newBoard);
 
 					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta).value;
 					if(value > maximumValue) {
@@ -109,7 +100,6 @@ public class MinimaxBoard {
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					PopManager.getSharedInstance().totalBoards++;
 					newBoard.board.dropADiscFromTop(i, move.player);
-					this.children.add(newBoard);
 
 					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta).value;
 					if(value < minimumValue) {
@@ -138,7 +128,6 @@ public class MinimaxBoard {
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					PopManager.getSharedInstance().totalBoards++;
 					newBoard.board.removeADiscFromBottom(i);
-					this.children.add(newBoard);
 
 					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta).value;
 					if(value < minimumValue) {
