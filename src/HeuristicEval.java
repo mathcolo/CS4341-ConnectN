@@ -26,9 +26,9 @@ public class HeuristicEval {
 		int num2 = nHorizontals(player, state, n);
 		int num3 = nVerticals(player, state, n);
 		
-		System.out.println(num + " diagonals of " + n +"-length for player" + player);
-		System.out.println(num2 + " horizontals of " + n +"-length for player" + player);
-		System.out.println(num3 + " verticals of " + n +"-length for player" + player);
+//		System.out.println(num + " diagonals of " + n +"-length for player" + player);
+//		System.out.println(num2 + " horizontals of " + n +"-length for player" + player);
+//		System.out.println(num3 + " verticals of " + n +"-length for player" + player);
 		
 		return num + num2 + num3;
 	}

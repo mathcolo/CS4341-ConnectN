@@ -80,7 +80,7 @@ public class Board {
 			 return false;
 			 }
 		 else if(board[height-1][col]!=currentPlayer){
-			 System.out.println("You don't have a checker in column "+col+" to pop out!");
+			 //System.out.println("You don't have a checker in column "+col+" to pop out!");
 			 return false;
 		 }
 		 else 
@@ -105,7 +105,7 @@ public class Board {
 			 return false;
 			 }
 		 else if(this.numOfDiscsInColumn[col]==this.height){
-			 System.out.println("Column is already full. Cannot drop more disc in it.");
+			 //System.out.println("Column is already full. Cannot drop more disc in it.");
 			 return false;
 		 }
 		 else
