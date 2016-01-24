@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import referee.Board;
 
 /**
@@ -42,7 +39,7 @@ public class MinimaxBoard {
 		if(depth == 0) {
 			int heuristicValue = HeuristicEval.HeuristicEvalFn(this.board);
 			
-			return new MinimaxReturn(heuristicValue, null);
+			return new MinimaxReturn(heuristicValue, this);
 		}
 		
 		// MAX SEARCH
@@ -59,20 +56,20 @@ public class MinimaxBoard {
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.dropADiscFromTop(i, move.player);
 
-					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta).value;
-					if(value > maximumValue) {
-						maximumValue = value;
-						maximumBoard = newBoard;
+					MinimaxReturn value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta);
+					if(value.value > maximumValue) {
+						maximumValue = value.value;
+						maximumBoard = value.board;
 					}
 					
-					if(value > alpha) {
-						alpha = value;
+					if(value.value > alpha) {
+						alpha = value.value;
 					}
 					
-					/*if(beta <= alpha) {
+					if(beta <= alpha) {
 						break;
 					}
-					*/
+					
 				}
 				
 			}
@@ -80,25 +77,25 @@ public class MinimaxBoard {
 			// POPOUT MOVE FOR MAX
 			for(int i = 0; i < board.getWidth(); i++) {
 				// check whether move is legal
-				if(board.canRemoveADiscFromBottom(i, parentMove.player)) {
+				if(board.canRemoveADiscFromBottom(i, parentMove.player) && PopManager.getSharedInstance().poppedMe == false) {
 					Move move = new Move(i, player, Move.POPOUT);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.removeADiscFromBottom(i);
 
-					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta).value;
-					if(value > maximumValue) {
-						maximumValue = value;
-						maximumBoard = newBoard;
+					MinimaxReturn value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta);
+					if(value.value > maximumValue) {
+						maximumValue = value.value;
+						maximumBoard = value.board;
 					}
 					
-					if(value > alpha) {
-						alpha = value;
+					if(value.value > alpha) {
+						alpha = value.value;
 					}
 					
-					/*if(beta <= alpha) {
+					if(beta <= alpha) {
 						break;
 					}
-					*/
+					
 				}
 				
 			}
@@ -121,20 +118,20 @@ public class MinimaxBoard {
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.dropADiscFromTop(i, move.player);
 
-					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta).value;
-					if(value < minimumValue) {
-						minimumValue = value;
-						minimumBoard = newBoard;
+					MinimaxReturn value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta);
+					if(value.value < minimumValue) {
+						minimumValue = value.value;
+						minimumBoard = value.board;
 					}
 					
-					if(value < beta) {
-						beta = value;
+					if(value.value < beta) {
+						beta = value.value;
 					}
 					
-					/*if(beta <= alpha) {
+					if(beta <= alpha) {
 						break;
 					}
-					*/
+					
 						
 				}
 				
@@ -143,25 +140,25 @@ public class MinimaxBoard {
 			// POPOUT MOVE FOR MIN
 			for(int i = 0; i < board.getWidth(); i++) {
 				// check if move is legal
-				if(board.canRemoveADiscFromBottom(i, parentMove.player)) {
+				if(board.canRemoveADiscFromBottom(i, parentMove.player)  && PopManager.getSharedInstance().poppedThem == false) {
 					Move move = new Move(i, player, Move.POPOUT);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.removeADiscFromBottom(i);
 
-					int value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta).value;
-					if(value < minimumValue) {
-						minimumValue = value;
-						minimumBoard = newBoard;
+					MinimaxReturn value = newBoard.minimax(depth-1, Move.oppositePlayer(player), alpha, beta);
+					if(value.value < minimumValue) {
+						minimumValue = value.value;
+						minimumBoard = value.board;
 					}
 					
-					if(value < beta) {
-						beta = value;
+					if(value.value < beta) {
+						beta = value.value;
 					}
 					
-					/*if(beta <= alpha) {
+					if(beta <= alpha) {
 						break;
 					}
-					*/
+					
 				}
 				
 			}
@@ -244,7 +241,7 @@ public class MinimaxBoard {
 		
 
 		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(6,1,Move.DROP));
-		MinimaxReturn stuff = wrapper.minimax(5, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		MinimaxReturn stuff = wrapper.minimax(3, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 		
 		if(stuff.board.parentMove.moveType == Move.DROP) {
 			System.out.println("Playing drop move");

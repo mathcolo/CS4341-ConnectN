@@ -45,11 +45,12 @@ public class TheresaPrestonPlayer {
 			}
 			else if(type == Move.POPOUT) {
 				currentBoard.removeADiscFromBottom(incoming.column);
+				PopManager.getSharedInstance().poppedThem = true;
 			}
 			
 			//Make a move back
 			MinimaxBoard wrapper = new MinimaxBoard(currentBoard, incoming);
-			MinimaxReturn outgoing = wrapper.minimax(3, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+			MinimaxReturn outgoing = wrapper.minimax(7, 2, Integer.MIN_VALUE, Integer.MAX_VALUE);
 			
 			Move outgoingMove = outgoing.board.parentMove;
 			if(outgoingMove.moveType == Move.DROP) {
@@ -57,6 +58,7 @@ public class TheresaPrestonPlayer {
 			}
 			else if(outgoingMove.moveType == Move.POPOUT) {
 				currentBoard.removeADiscFromBottom(outgoingMove.column);
+				PopManager.getSharedInstance().poppedMe = true;
 			}
 			
 			log("Sending " + outgoingMove);
