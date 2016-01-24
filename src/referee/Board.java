@@ -3,8 +3,6 @@
  */
 package referee;
 
-import java.util.Arrays;
-
 /**
  * @author lzhu
  *
@@ -343,6 +341,9 @@ public class Board {
 		 this.board[row][col]=player;
 	 }
 	 
+	 /**
+	  * @return the number of pieces in a row needed to win
+	  */
 	 public int getN() {
 		 return this.N;
 	 }
@@ -439,14 +440,23 @@ public class Board {
  //        b.test5();
 	 }
 
+	 /**
+	  * @return width of the board
+	  */
 	public int getWidth() {
 		return this.width;
 	}
 	
+	/**
+	 * @return height of the board
+	 */
 	public int getHeight() {
 		return this.height;
 	}
 
+	/**
+	 * @return the board
+	 */
 	public int[][] getBoard() {
 		return this.board;
 	}
