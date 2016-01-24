@@ -192,7 +192,7 @@ public class MinimaxBoard {
 		
 
 		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(6,1,Move.Type.DROP));
-		MinimaxReturn stuff = wrapper.minimax(3, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		MinimaxReturn stuff = wrapper.minimax(6, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 		
 		if(stuff.board.parentMove.moveType == Move.Type.DROP) {
 			System.out.println("Playing drop move");
@@ -209,17 +209,7 @@ public class MinimaxBoard {
 		
 	}
 	
-	private class MinimaxReturn {
-		
-		int value;
-		MinimaxBoard board;
-		
-		public MinimaxReturn(int value, MinimaxBoard board) {
-			this.value = value;
-			this.board = board;
-		}
-		
-	}
+
 	
 	
 }

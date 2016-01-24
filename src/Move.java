@@ -27,6 +27,20 @@ public class Move {
 		else return Board.PLAYER1;
 	}
 	
+	public Board applyMoveToExistingBoard(Board b) {
+		
+		Board newBoard = new Board(b);
+		
+		if(this.moveType == Move.Type.DROP) {
+			newBoard.dropADiscFromTop(this.column, this.player);
+		}
+		else if(this.moveType == Move.Type.POPOUT) {
+			newBoard.removeADiscFromBottom(this.column);
+		}
+		
+		return newBoard;
+	}
+	
 	public String toString() {
 		return "Move(column, player): (" + column + ", " + player + ")";
 	}
