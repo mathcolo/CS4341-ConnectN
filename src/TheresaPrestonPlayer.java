@@ -35,19 +35,33 @@ public class TheresaPrestonPlayer {
 		//A move
 		if(ls.size() == 2) {
 			
-			Move.Type type = (Integer.parseInt(ls.get(1)) == 1 ? Move.Type.DROP : Move.Type.POPOUT);
+			int type = Integer.parseInt(ls.get(1));
 			
 			Move incoming = new Move(Integer.parseInt(ls.get(0)), 2, type);
-			currentBoard = incoming.applyMoveToExistingBoard(currentBoard);
+			log("Recvd " + incoming);
+			
+			if(type == Move.DROP) {
+				currentBoard.dropADiscFromTop(incoming.column, 2);
+			}
+			else if(type == Move.POPOUT) {
+				currentBoard.removeADiscFromBottom(incoming.column);
+			}
 			
 			//Make a move back
 			MinimaxBoard wrapper = new MinimaxBoard(currentBoard, incoming);
-			MinimaxReturn outgoing = wrapper.minimax(4, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+			MinimaxReturn outgoing = wrapper.minimax(3, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 			
 			Move outgoingMove = outgoing.board.parentMove;
-			currentBoard = outgoingMove.applyMoveToExistingBoard(currentBoard);
+			if(outgoingMove.moveType == Move.DROP) {
+				currentBoard.dropADiscFromTop(outgoingMove.column, 2);
+			}
+			else if(outgoingMove.moveType == Move.POPOUT) {
+				currentBoard.removeADiscFromBottom(outgoingMove.column);
+			}
 			
-			System.out.println(outgoingMove.column + " " + (outgoingMove.moveType == Move.Type.DROP ? 1 : 0));
+			log("Sending " + outgoingMove);
+			
+			System.out.println(outgoingMove.column + " " + outgoingMove.moveType);
 			
 		}
 		else if(ls.size() == 1){
@@ -68,6 +82,7 @@ public class TheresaPrestonPlayer {
 			
 			if(whichPlayerFirst == ourPlayer) {
 				//We need to send the first move
+				log("Sending first move");
 				Random r = new Random();
 				
 				System.out.println(r.nextInt(5) + " 1");
@@ -75,10 +90,14 @@ public class TheresaPrestonPlayer {
 		}
 		else if(ls.size() == 4){		//player1: aa player2: bb
 
-			if(ls.get(2).equals("TheresaN'Preston")) {
+			if(ls.get(2).equals("TheresaPreston")) {
+				log("We're player 1");
 				ourPlayer = 1;
 			}
-			else ourPlayer = 2;
+			else {
+				log("We're player 2");
+				ourPlayer = 2;
+			}
 		}
 		else
 			System.out.println("not what I want");
@@ -86,8 +105,8 @@ public class TheresaPrestonPlayer {
 
     public static void main(String[] args) {
 
-    	log("Starting AI");
-    	System.out.println("TheresaN'Preston");
+    	log("\n\n\n\n\nStarting AI");
+    	System.out.println("TheresaPreston");
     	
     	TheresaPrestonPlayer player = new TheresaPrestonPlayer();
     	

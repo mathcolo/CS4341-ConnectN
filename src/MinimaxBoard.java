@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import referee.Board;
 
 /**
@@ -52,7 +55,7 @@ public class MinimaxBoard {
 			for(int i = 0; i < board.getWidth(); i++) {
 				// check whether move is legal
 				if(board.canDropADiscFromTop(i, parentMove.player)) {
-					Move move = new Move(i, player, Move.Type.DROP);
+					Move move = new Move(i, player, Move.DROP);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.dropADiscFromTop(i, move.player);
 
@@ -66,9 +69,10 @@ public class MinimaxBoard {
 						alpha = value;
 					}
 					
-					if(beta <= alpha) {
+					/*if(beta <= alpha) {
 						break;
 					}
+					*/
 				}
 				
 			}
@@ -77,7 +81,7 @@ public class MinimaxBoard {
 			for(int i = 0; i < board.getWidth(); i++) {
 				// check whether move is legal
 				if(board.canRemoveADiscFromBottom(i, parentMove.player)) {
-					Move move = new Move(i, player, Move.Type.POPOUT);
+					Move move = new Move(i, player, Move.POPOUT);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.removeADiscFromBottom(i);
 
@@ -91,9 +95,10 @@ public class MinimaxBoard {
 						alpha = value;
 					}
 					
-					if(beta <= alpha) {
+					/*if(beta <= alpha) {
 						break;
 					}
+					*/
 				}
 				
 			}
@@ -112,7 +117,7 @@ public class MinimaxBoard {
 			for(int i = 0; i < board.getWidth(); i++) {
 				// check if move is legal
 				if(board.canDropADiscFromTop(i, parentMove.player)) {
-					Move move = new Move(i, player, Move.Type.DROP);
+					Move move = new Move(i, player, Move.DROP);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.dropADiscFromTop(i, move.player);
 
@@ -126,9 +131,10 @@ public class MinimaxBoard {
 						beta = value;
 					}
 					
-					if(beta <= alpha) {
+					/*if(beta <= alpha) {
 						break;
 					}
+					*/
 						
 				}
 				
@@ -138,7 +144,7 @@ public class MinimaxBoard {
 			for(int i = 0; i < board.getWidth(); i++) {
 				// check if move is legal
 				if(board.canRemoveADiscFromBottom(i, parentMove.player)) {
-					Move move = new Move(i, player, Move.Type.POPOUT);
+					Move move = new Move(i, player, Move.POPOUT);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.removeADiscFromBottom(i);
 
@@ -152,9 +158,10 @@ public class MinimaxBoard {
 						beta = value;
 					}
 					
-					if(beta <= alpha) {
+					/*if(beta <= alpha) {
 						break;
 					}
+					*/
 				}
 				
 			}
@@ -168,6 +175,45 @@ public class MinimaxBoard {
 	
 	// TODO: REMOVE
 	public static void main(String[] args) {
+		/*
+		Board board1 = new Board(5,5,4);
+		
+		ArrayList<String> ls = new ArrayList<String>();
+		ls.add("0");
+		ls.add("1");
+		
+		int type = Integer.parseInt(ls.get(1));
+		Move incoming = new Move(Integer.parseInt(ls.get(0)), 2, type);
+		
+		System.out.println("incoming:" + incoming);
+
+		if(type == Move.DROP) {
+			board1.dropADiscFromTop(incoming.column, 2);
+		}
+		else if(type == Move.POPOUT) {
+			board1.removeADiscFromBottom(incoming.column);
+		}
+		
+		board1.printBoard();
+		
+		//Make a move back
+		MinimaxBoard wrapper = new MinimaxBoard(board1, incoming);
+		MinimaxReturn outgoing = wrapper.minimax(6, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		
+		Move outgoingMove = outgoing.board.parentMove;
+		System.out.println("outgoing:" + outgoingMove);
+		
+		if(outgoingMove.moveType == Move.DROP) {
+			System.out.println("THIS IS HAPPENING");
+			board1.dropADiscFromTop(outgoingMove.column, 1);
+		}
+		else if(outgoingMove.moveType == Move.POPOUT) {
+			board1.removeADiscFromBottom(outgoingMove.column);
+		}
+
+		board1.printBoard();
+		*/
+		
 		
 		Board test = new Board(7, 7, 4);
 							//col, player
@@ -197,20 +243,22 @@ public class MinimaxBoard {
 //		System.exit(0);
 		
 
-		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(6,1,Move.Type.DROP));
-		MinimaxReturn stuff = wrapper.minimax(6, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		MinimaxBoard wrapper = new MinimaxBoard(test, new Move(6,1,Move.DROP));
+		MinimaxReturn stuff = wrapper.minimax(5, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 		
-		if(stuff.board.parentMove.moveType == Move.Type.DROP) {
+		if(stuff.board.parentMove.moveType == Move.DROP) {
 			System.out.println("Playing drop move");
 			test.dropADiscFromTop(stuff.board.parentMove.column, stuff.board.parentMove.player);
 		}
-		else if(stuff.board.parentMove.moveType == Move.Type.POPOUT) {
+		else if(stuff.board.parentMove.moveType == Move.POPOUT) {
 			System.out.println("Playing popout move");
 			test.removeADiscFromBottom(stuff.board.parentMove.column);
 		}
 		else System.out.println("WTF");
 		
 		test.printBoard();
+		
+		
 
 		
 	}

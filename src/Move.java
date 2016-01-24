@@ -8,12 +8,12 @@ import referee.Board;
  *
  */
 public class Move {
+
+	public static final int DROP = 1;
+	public static final int POPOUT = 0;
+	public static final int INVALID = 3;
 	
-	public enum Type {
-		DROP, POPOUT, INVALID
-	}
-	
-	public Type moveType;
+	public int moveType;
 	public int column;
 	public int player;
 	
@@ -24,7 +24,7 @@ public class Move {
 	 * @param player - the player that made the move
 	 * @param moveType - the type of move to make
 	 */
-	public Move(int column, int player, Type moveType) {
+	public Move(int column, int player, int moveType) {
 		this.column = column;
 		this.player = player;
 		this.moveType = moveType;
@@ -34,23 +34,10 @@ public class Move {
 		if(player == Board.PLAYER1) return Board.PLAYER2;
 		else return Board.PLAYER1;
 	}
-	
-	public Board applyMoveToExistingBoard(Board b) {
-		
-		Board newBoard = new Board(b);
-		
-		if(this.moveType == Move.Type.DROP) {
-			newBoard.dropADiscFromTop(this.column, this.player);
-		}
-		else if(this.moveType == Move.Type.POPOUT) {
-			newBoard.removeADiscFromBottom(this.column);
-		}
-		
-		return newBoard;
-	}
-	
+
 	public String toString() {
-		return "Move(column, player): (" + column + ", " + player + ")";
+		
+		return "Move(column, player, type): (" + column + ", " + player + ", " + moveType + " )";
 	}
 
 }
