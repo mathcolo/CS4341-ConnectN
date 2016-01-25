@@ -17,11 +17,14 @@ public class TheresaPrestonPlayer {
 	
 	static final String logFile = "AIout.txt";
 	
+	//Keep track of who has popped out or not
 	boolean poppedMe = false;
 	boolean poppedThem = false;
+
 	
 	int ourPlayer = -1;
 	
+	//Our keeping track of the current game state
 	private Board currentBoard;
 
 	public void processInput(BufferedReader input) throws IOException{
@@ -32,7 +35,7 @@ public class TheresaPrestonPlayer {
     	
 		List<String> ls = Arrays.asList(s.split(" "));
 
-		//A move
+		//A move incoming from the Ref
 		if(ls.size() == 2) {
 			
 			int type = Integer.parseInt(ls.get(1));
@@ -63,6 +66,7 @@ public class TheresaPrestonPlayer {
 			
 			log("Sending " + outgoingMove);
 			
+			//Send it back!
 			System.out.println(outgoingMove.column + " " + outgoingMove.moveType);
 			
 		}
@@ -124,10 +128,13 @@ public class TheresaPrestonPlayer {
     		}
     		
 		}
-    	
-    	
     }
     
+    /**
+     * Log a value to AIout.txt (the file name specified at the top of this file) for logging outside of stdout and stderr
+     * @param s - the string to log
+     * @author Theresa Inzerillo, Preston Mueller
+     */
     private static void log(String s) {
     	s += "\n";
     	

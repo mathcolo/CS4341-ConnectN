@@ -36,7 +36,6 @@ public class Move {
 	}
 
 	public String toString() {
-		
 		return "Move(column, player, type): (" + column + ", " + player + ", " + moveType + " )";
 	}
 
