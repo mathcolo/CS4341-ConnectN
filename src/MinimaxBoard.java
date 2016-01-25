@@ -77,7 +77,7 @@ public class MinimaxBoard {
 			// POPOUT MOVE FOR MAX
 			for(int i = 0; i < board.getWidth(); i++) {
 				// check whether move is legal
-				if(board.canRemoveADiscFromBottom(i, parentMove.player) && PopManager.getSharedInstance().poppedMe == false) {
+				if(board.canRemoveADiscFromBottom(i, player) && PopManager.getSharedInstance().poppedMe == false) {
 					Move move = new Move(i, player, Move.POPOUT);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.removeADiscFromBottom(i);
@@ -140,7 +140,7 @@ public class MinimaxBoard {
 			// POPOUT MOVE FOR MIN
 			for(int i = 0; i < board.getWidth(); i++) {
 				// check if move is legal
-				if(board.canRemoveADiscFromBottom(i, parentMove.player)  && PopManager.getSharedInstance().poppedThem == false) {
+				if(board.canRemoveADiscFromBottom(i, player)  && PopManager.getSharedInstance().poppedThem == false) {
 					Move move = new Move(i, player, Move.POPOUT);
 					MinimaxBoard newBoard = new MinimaxBoard(new Board(this.board), move);
 					newBoard.board.removeADiscFromBottom(i);

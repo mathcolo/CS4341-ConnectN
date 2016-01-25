@@ -50,7 +50,7 @@ public class TheresaPrestonPlayer {
 			
 			//Make a move back
 			MinimaxBoard wrapper = new MinimaxBoard(currentBoard, incoming);
-			MinimaxReturn outgoing = wrapper.minimax(7, 2, Integer.MIN_VALUE, Integer.MAX_VALUE);
+			MinimaxReturn outgoing = wrapper.minimax(7, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
 			
 			Move outgoingMove = outgoing.board.parentMove;
 			if(outgoingMove.moveType == Move.DROP) {
