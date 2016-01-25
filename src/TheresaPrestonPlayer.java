@@ -21,7 +21,6 @@ public class TheresaPrestonPlayer {
 	boolean poppedMe = false;
 	boolean poppedThem = false;
 
-	
 	int ourPlayer = -1;
 	
 	//Our keeping track of the current game state
